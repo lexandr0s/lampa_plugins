@@ -805,9 +805,10 @@
             }
             
             // Добавляем пункт в главное меню (ИЗМЕНЕНИЕ: с учетом перевода)
+			
             const menuButton = window.Lampa.Menu.addButton(
                 iconSvg, 
-                window.Lampa.Lang.translate('title_filter') + ' +', 
+                'Фильтp +',
                 showFilter
             );
             
