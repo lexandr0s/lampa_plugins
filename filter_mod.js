@@ -1,14 +1,9 @@
 (function() {
     'use strict';
     
-    console.log('Фильтр +: Загрузка полного модуля...');
-    
-    // Глобальная ссылка на наш модуль
     let FilterPlusModule = null;
     
-    // Функция для создания полного модуля
     function createFilterModule() {
-        // ---- ТОЧНАЯ ПОЛНАЯ КОПИЯ data.js С ДОБАВЛЕНИЕМ ПУНКТОВ ----
         const data = {};
         
         data.type = {
@@ -279,9 +274,6 @@
             ]
         };
         
-        // ---- ТОЧНАЯ ГЕНЕРАЦИЯ КАК В ОРИГИНАЛЕ ----
-        
-        // Генерация pgrating (ТОЧНО КАК В ОРИГИНАЛЕ)
         for(let a = 18; a >= 0; a-=3){
             data.pgrating.items.push({
                 title: a + '+',
@@ -296,7 +288,6 @@
             });
         }
         
-        // Генерация годов (ТОЧНО КАК В ОРИГИНАЛЕ)
         let i = 100;
         let y = (new Date()).getFullYear();
         
@@ -313,8 +304,7 @@
             });
         }
         
-        // Устанавливаем checkbox: true для всех языков (ТОЧНО КАК В ОРИГИНАЛЕ)
-        // кроме первого пункта "Любой"
+
         data.language.items.forEach((i, index) => {
             if (index > 0) i.checkbox = true;
         });
@@ -328,7 +318,6 @@
             if (!window.Lampa.Storage) return;
             
             try {
-                // Создаем компактное представление состояния
                 const state = {};
                 
                 // Сохраняем только выбранные индексы для радио-кнопок
@@ -415,8 +404,6 @@
             }
         }
         
-        // ---- ТОЧНАЯ КОПИЯ filter.js С ДОБАВЛЕНИЕМ ОБРАБОТКИ "ЛЮБОЙ" ----
-        
         /**
          * Главное меню фильтрации
          */
@@ -446,7 +433,6 @@
                 }
             });
 
-            // ИЗМЕНЕНИЕ: Используем перевод оригинального заголовка + символ +
             window.Lampa.Select.show({
                 title: window.Lampa.Lang.translate('title_filter') + ' +',
                 items: items,
@@ -610,7 +596,6 @@
             let source = window.Lampa.Storage.field('source');
             let query  = source == 'cub' ? queryForCUB() : queryForTMDB();
 
-            // ИЗМЕНЕНИЕ: Используем перевод оригинального заголовка + символ +
             let activity = {
                 url: query,
                 title: window.Lampa.Lang.translate('title_filter') + ' +',
@@ -842,7 +827,6 @@
         }
     }
     
-    // ---- Запуск инициализации как в работающем плагине ----
     
     function startInitialization() {
         if (window.Lampa && window.Lampa.Listener) {
@@ -874,4 +858,5 @@
     // Запускаем
     startInitialization();
     
+
 })();
