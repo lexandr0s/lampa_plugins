@@ -662,7 +662,7 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[1].selected = true; // В топе
+            data.sort.items[2].selected = true; // В топе
             
             data.year.items.forEach(item => item.selected = false);
             data.pgrating.items.forEach(item => item.selected = false);
@@ -1670,7 +1670,7 @@
         /**
          * Запуск поиска
          */
-        function search(){
+                function search(){
             window.Lampa.Controller.toggle('content');
 
             // Проверяем, выбран ли возрастной рейтинг (кроме "Любой")
@@ -1680,12 +1680,32 @@
                 hasPGRating = selectedPGRating && selectedPGRating.pg !== undefined;
             }
 
+            // Проверяем, выбран ли русский язык
+            let hasRussianLanguage = false;
+            if (data.language && data.language.items) {
+                const selectedRussian = data.language.items.find(item => 
+                    item.code && item.code.includes('ru') && item.checked === true
+                );
+                hasRussianLanguage = !!selectedRussian;
+            }
+
             // Определяем источник поиска:
-            // Если выбран возрастной рейтинг (не "Любой") -> CUB
-            // В противном случае -> TMDB
-            let source = hasPGRating ? 'cub' : 'tmdb';
+            // 1. Если выбран русский язык -> CUB (для лучшего поиска русскоязычного контента)
+            // 2. Если выбран возрастной рейтинг (не "Любой") -> CUB
+            // 3. В противном случае -> TMDB
+            let source = 'tmdb'; // по умолчанию TMDB
+            
+            if (hasRussianLanguage) {
+                source = 'cub';
+                console.log('Фильтр +: Источник CUB выбран (русский язык)');
+            } else if (hasPGRating) {
+                source = 'cub';
+                console.log('Фильтр +: Источник CUB выбран (возрастной рейтинг)');
+            } else {
+                console.log('Фильтр +: Источник TMDB выбран (по умолчанию)');
+            }
     
-            console.log(`Фильтр +: Источник поиска: ${source} (возрастной рейтинг: ${hasPGRating ? 'выбран' : 'не выбран'})`);
+            console.log(`Фильтр +: Итоговый источник: ${source} (русский: ${hasRussianLanguage}, возрастной рейтинг: ${hasPGRating})`);
     
             let query = source == 'cub' ? queryForCUB() : queryForTMDB();
 
