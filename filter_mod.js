@@ -309,6 +309,466 @@
             if (index > 0) i.checkbox = true;
         });
         
+// ---- БЫСТРЫЕ ПРЕСЕТЫ ----
+        
+/**
+ * Пресеты фильтров
+ */
+	const presets = {
+    // 1. Вечерний просмотр
+    'evening': {
+        name: 'preset_evening',
+        apply: function() {
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+            // Рейтинг: 6.5+ (ближайший - 6+)
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[2].selected = true; // 6+
+            
+            // Жанры: Драма, Комедия, Мелодрама
+            resetGenres();
+            const dramaId = 18; // Драма
+            const comedyId = 35; // Комедия
+            const romanceId = 10749; // Мелодрама
+            
+            setMovieGenre(dramaId, true);
+            setMovieGenre(comedyId, true);
+            setMovieGenre(romanceId, true);
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			data.quality.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+			
+        }
+    },
+    
+    // 2. Семейный вечер
+    'family': {
+        name: 'preset_family',
+        apply: function() {
+            // Тип: фильмы или мультфильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true;
+            
+            // Возрастной рейтинг: 0-12
+            data.pgrating.items.forEach(item => item.selected = false);
+            data.pgrating.items[3].selected = true;
+            
+            // Жанры: Семейный, Мультфильм, Приключения
+            resetGenres();
+            const familyId = 10751; // Семейный
+            const adventureId = 12; // Приключения
+            
+            setMovieGenre(familyId, true);
+            setMovieGenre(adventureId, true);
+            
+            // Рейтинг: 6+
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[2].selected = true; // 6+
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			
+			data.quality.items.forEach(item => item.selected = false);
+        }
+    },
+    
+    // 3. Экшен-марафон
+    'action': {
+        name: 'preset_action',
+        apply: function() {
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+            // Жанры: Боевик, Приключения, Фантастика
+            resetGenres();
+            const actionId = 28; // Боевик
+            const adventureId = 12; // Приключения
+            const scifiId = 878; // Фантастика
+            
+            setMovieGenre(actionId, true);
+            setMovieGenre(adventureId, true);
+            setMovieGenre(scifiId, true);
+            
+            // Рейтинг: 6+
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[2].selected = true; // 6+
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			
+			data.quality.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+        }
+    },
+    
+    // 4. Романтическое кино
+    'romance': {
+        name: 'preset_romance',
+        apply: function() {
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+            // Жанры: Мелодрама, Комедия
+            resetGenres();
+            const romanceId = 10749; // Мелодрама
+            const comedyId = 35; // Комедия
+            
+            setMovieGenre(romanceId, true);
+            setMovieGenre(comedyId, true);
+            
+            // Рейтинг: 6.5+ (ближайший - 6+)
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[2].selected = true; // 6+
+            
+            // Языки: RU, EN, FR
+            resetLanguages();
+            setLanguage('ru', true);
+            setLanguage('en', true);
+            setLanguage('fr', true);
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			data.quality.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+        }
+    },
+    
+    // 5. Только шедевры
+    'masterpieces': {
+        name: 'preset_masterpieces',
+        apply: function() {
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+			resetGenres();
+			
+            // Рейтинг: 8+
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[1].selected = true; // 8+
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+			data.quality.items.forEach(item => item.selected = false);
+        }
+    },
+    
+    // 6. Новинки высокого качества
+    'new_hd': {
+        name: 'preset_new_hd',
+        apply: function() {
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+			resetGenres();
+			data.pgrating.items.forEach(item => item.selected = false);
+			
+            // Год: текущий и предыдущий
+            data.year.items.forEach(item => item.selected = false);
+            const currentYear = new Date().getFullYear();
+            const currentYearIndex = data.year.items.findIndex(item => 
+                !item.any && parseInt(item.title) === currentYear
+            );
+            if (currentYearIndex !== -1) data.year.items[currentYearIndex].selected = true;
+            
+            // Рейтинг: 7+ (ближайший - 6+)
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[2].selected = true; // 6+
+            
+            // Качество: HD/UHD
+            if (data.quality.items.length > 1) {
+                data.quality.items.forEach(item => item.selected = false);
+                data.quality.items[1].selected = true; // Высокое качество
+            }
+        }
+    },
+    
+    
+    
+    // 8. Ужасы и триллеры
+    'horror': {
+        name: 'preset_horror',
+        apply: function() {
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+            // Жанры: Ужасы, Триллер, Детектив
+            resetGenres();
+            const horrorId = 27; // Ужасы
+            const thrillerId = 53; // Триллер
+            const mysteryId = 9648; // Детектив
+            
+            setMovieGenre(horrorId, true);
+            setMovieGenre(thrillerId, true);
+            setMovieGenre(mysteryId, true);
+            
+            // Рейтинг: 5.5+ (ближайший - 6+ или 4+)
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[3].selected = true; // 4+ (т.к. для ужасов оценки часто занижены)
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+			data.quality.items.forEach(item => item.selected = false);
+        }
+    },
+    
+    // 9. Научная фантастика
+    'scifi': {
+        name: 'preset_scifi',
+        apply: function() {
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+            // Жанры: Фантастика, Фэнтези
+            resetGenres();
+            const scifiId = 878; // Фантастика
+            const fantasyId = 14; // Фэнтези
+            
+            setMovieGenre(scifiId, true);
+            setMovieGenre(fantasyId, true);
+            
+            // Рейтинг: 6.5+ (ближайший - 6+)
+            data.rating.items.forEach(item => item.selected = false);
+            data.rating.items[2].selected = true; // 6+
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+			data.quality.items.forEach(item => item.selected = false);
+        }
+    },
+    
+    // 11. Русское кино
+    'russian': {
+        name: 'preset_russian',
+        apply: function() {
+			
+			resetGenres();
+			
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+            // Язык: RU (русский)
+            resetLanguages();
+            setLanguage('ru', true);
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+			data.quality.items.forEach(item => item.selected = false);
+        }
+    },
+    
+    // 12. Азиатское кино
+    'asian': {
+        name: 'preset_asian',
+        apply: function() {
+			
+			resetGenres();
+			
+            // Тип: фильмы
+            data.type.items.forEach(item => item.selected = false);
+            data.type.items[0].selected = true; // Фильмы
+            
+            // Языки: KO (корейский), JA (японский), ZH (китайский), ID (индонезийский), TH (тайский)
+            resetLanguages();
+            setLanguage('ko', true);
+            setLanguage('ja', true);
+            setLanguage('zh|cn', true);
+            setLanguage('id', true);
+            setLanguage('th', true);
+            
+            // Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[3].selected = true; // В топе
+			
+			data.year.items.forEach(item => item.selected = false);
+			data.pgrating.items.forEach(item => item.selected = false);
+			data.quality.items.forEach(item => item.selected = false);
+        }
+    }
+};      
+        // ---- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ПРЕСЕТОВ ----
+        
+        /**
+         * Сброс всех жанров
+         */
+        function resetGenres() {
+            // Сброс жанров фильмов
+            data.genres_movie.items.forEach(item => {
+                if (item.checkbox) {
+                    item.checked = false;
+                }
+            });
+            
+            // Сброс жанров сериалов
+            data.genres_tv.items.forEach(item => {
+                if (item.checkbox) {
+                    item.checked = false;
+                }
+            });
+            
+            // Установка "Любой" в false для жанров
+            data.genres_movie.items[0].checked = false;
+            data.genres_tv.items[0].checked = false;
+        }
+        
+        /**
+         * Установка жанра фильма
+         */
+        function setMovieGenre(genreId, checked) {
+            const genreItem = data.genres_movie.items.find(item => item.id === genreId);
+            if (genreItem) {
+                genreItem.checked = checked;
+            }
+        }
+        
+        /**
+         * Сброс всех языков
+         */
+        function resetLanguages() {
+            data.language.items.forEach(item => {
+                if (item.checkbox) {
+                    item.checked = false;
+                }
+            });
+            data.language.items[0].checked = false; // "Любой"
+        }
+        
+        /**
+         * Установка языка
+         */
+        function setLanguage(langCode, checked) {
+            const langItem = data.language.items.find(item => item.code === langCode);
+            if (langItem) {
+                langItem.checked = checked;
+            }
+        }
+        
+        /**
+         * Применение пресета
+         */
+        function applyPreset(presetKey) {
+            if (presets[presetKey] && typeof presets[presetKey].apply === 'function') {
+                console.log(`Фильтр +: Применяем пресет ${presetKey}`);
+                
+                // Применяем настройки пресета
+                presets[presetKey].apply();
+                
+                // Обновляем подзаголовки
+                for(var i in data) selected(data[i]);
+                
+                // Сохраняем настройки
+                saveFilterSettings();
+                
+                // Показываем уведомление
+                if (window.Lampa.Noty) {
+                    window.Lampa.Noty.show(
+                        window.Lampa.Lang.translate('preset_applied') || 'Пресет применен', 
+                        2000
+                    );
+                }
+                
+                // Возвращаемся в главное меню
+                main();
+            } else {
+                console.error(`Фильтр +: Пресет ${presetKey} не найден`);
+            }
+        }
+        
+        /**
+         * Меню быстрых пресетов
+         */
+        function presetsMenu() {
+            const presetItems = [
+                {
+                    title: window.Lampa.Lang.translate('preset_evening'),
+                    preset: 'evening'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_family'),
+                    preset: 'family'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_action'),
+                    preset: 'action'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_romance'),
+                    preset: 'romance'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_masterpieces'),
+                    preset: 'masterpieces'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_new_hd'),
+                    preset: 'new_hd'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_horror'),
+                    preset: 'horror'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_scifi'),
+                    preset: 'scifi'
+                },
+                                {
+                    title: window.Lampa.Lang.translate('preset_russian'),
+                    preset: 'russian'
+                },
+                {
+                    title: window.Lampa.Lang.translate('preset_asian'),
+                    preset: 'asian'
+                }
+            ];
+            
+            window.Lampa.Select.show({
+                title: window.Lampa.Lang.translate('title_presets'),
+                items: presetItems,
+                onBack: main,
+                onSelect: (a) => {
+                    applyPreset(a.preset);
+                }
+            });
+        }
+        
         // ---- ФУНКЦИИ СОХРАНЕНИЯ И ВОССТАНОВЛЕНИЯ ----
         
         /**
@@ -504,13 +964,25 @@
             let cat  = data.type.items.find(s=>s.selected).cat;
             let type = cat.indexOf('movie') >= 0 ? 'movie' : 'tv';
 
-            let items = [{
-                title: window.Lampa.Lang.translate('search_start'),
-                search: true
-            },{
-                title: window.Lampa.Lang.translate('filter_reset_all'),
-                reset: true
-            },data.type,data.rating,data['genres_'+type],data.language,data.year];
+            let items = [
+                {
+                    title: window.Lampa.Lang.translate('search_start'),
+                    search: true
+                },
+                {
+                    title: window.Lampa.Lang.translate('filter_reset_all'),
+                    reset: true
+                },
+                {
+                    title: window.Lampa.Lang.translate('title_presets'),
+                    presets: true
+                },
+                data.type,
+                data.rating,
+                data['genres_'+type],
+                data.language,
+                data.year
+            ];
 
             if(window.Lampa.Storage.field('source') == 'cub') items.push(data.pgrating,data.sort,data.quality);
 
@@ -535,6 +1007,7 @@
                 onSelect: (a)=>{
                     if(a.search) search();
                     else if(a.reset) resetAllFilters();
+                    else if(a.presets) presetsMenu();
                     else submenu(a);
                 }
             });
@@ -840,7 +1313,9 @@
             _data: data,
             _queryForTMDB: queryForTMDB,
             _queryForCUB: queryForCUB,
-            _resetAllFilters: resetAllFilters
+            _resetAllFilters: resetAllFilters,
+            _presets: presets,
+            _applyPreset: applyPreset
         };
     }
     
@@ -855,6 +1330,7 @@
             
             // Регистрируем перевод для пункта меню для всех поддерживаемых языков
             if (window.Lampa.Lang && window.Lampa.Lang.add) {
+                // Базовые переводы
                 window.Lampa.Lang.add({  
                     menu_filter_plus: {  
                         ru: 'Фильтp +',  
@@ -891,6 +1367,163 @@
                         he: 'מסננים אופסו',
                         cs: 'Filtry resetovány',
                         ro: 'Filtrele au fost resetate'
+                    },
+                    title_presets: {
+                        ru: 'Быстрые пресеты',
+                        en: 'Quick presets',
+                        uk: 'Швидкі пресети',
+                        be: 'Хуткія прэсеты',
+                        zh: '快速预设',
+                        pt: 'Predefinições rápidas',
+                        bg: 'Бързи предустановки',
+                        he: 'קדימות מהירות',
+                        cs: 'Rychlé předvolby',
+                        ro: 'Preseturi rapide'
+                    },
+                    preset_applied: {
+                        ru: 'Пресет применен',
+                        en: 'Preset applied',
+                        uk: 'Пресет застосовано',
+                        be: 'Прэсет ужыты',
+                        zh: '预设已应用',
+                        pt: 'Predefinição aplicada',
+                        bg: 'Предустановката е приложена',
+                        he: 'הקדימה הוחלה',
+                        cs: 'Předvolba použita',
+                        ro: 'Preset aplicat'
+                    },
+                    // Названия пресетов (без описаний)
+                    preset_evening: {
+                        ru: '🎬 Вечерний просмотр',
+                        en: '🎬 Evening watch',
+                        uk: '🎬 Вечірній перегляд',
+                        be: '🎬 Вячэрні прагляд',
+                        zh: '🎬 晚间观看',
+                        pt: '🎬 Visualização noturna',
+                        bg: '🎬 Вечерен преглед',
+                        he: '🎬 צפיית ערב',
+                        cs: '🎬 Večerní sledování',
+                        ro: '🎬 Vizionare seara'
+                    },
+                    preset_family: {
+                        ru: '👨‍👩‍👧‍👦 Семейный вечер',
+                        en: '👨‍👩‍👧‍👦 Family evening',
+                        uk: '👨‍👩‍👧‍👦 Сімейний вечір',
+                        be: '👨‍👩‍👧‍👦 Сямейны вечар',
+                        zh: '👨‍👩‍👧‍👦 家庭之夜',
+                        pt: '👨‍👩‍👧‍👦 Noite em família',
+                        bg: '👨‍👩‍👧‍👦 Семейна вечер',
+                        he: '👨‍👩‍👧‍👦 ערב משפחתי',
+                        cs: '👨‍👩‍👧‍👦 Rodinný večer',
+                        ro: '👨‍👩‍👧‍👦 Seară în familie'
+                    },
+                    preset_action: {
+                        ru: '💥 Экшен-марафон',
+                        en: '💥 Action marathon',
+                        uk: '💥 Екшен-марафон',
+                        be: '💥 Экшэн-марафон',
+                        zh: '💥 动作马拉松',
+                        pt: '💥 Maratona de ação',
+                        bg: '💥 Екшън маратон',
+                        he: '💥 מרתון אקשן',
+                        cs: '💥 Akční maraton',
+                        ro: '💥 Maraton acțiune'
+                    },
+                    preset_romance: {
+                        ru: '❤️ Романтическое кино',
+                        en: '❤️ Romantic movies',
+                        uk: '❤️ Романтичне кіно',
+                        be: '❤️ Рамантычнае кіно',
+                        zh: '❤️ 浪漫电影',
+                        pt: '❤️ Filmes românticos',
+                        bg: '❤️ Романтични филми',
+                        he: '❤️ סרטים רומנטיים',
+                        cs: '❤️ Romantické filmy',
+                        ro: '❤️ Filme romantice'
+                    },
+                    preset_masterpieces: {
+                        ru: '🏆 Только шедевры',
+                        en: '🏆 Only masterpieces',
+                        uk: '🏆 Тільки шедеври',
+                        be: '🏆 Толькі шэдэўры',
+                        zh: '🏆 仅限杰作',
+                        pt: '🏆 Apenas obras-primas',
+                        bg: '🏆 Само шедьоври',
+                        he: '🏆 רק יצירות מופת',
+                        cs: '🏆 Jen mistrovská díla',
+                        ro: '🏆 Doar capodopere'
+                    },
+                    preset_new_hd: {
+                        ru: '🎥 Новинки высокого качества',
+                        en: '🎥 New in high quality',
+                        uk: '🎥 Новинки високої якості',
+                        be: '🎥 Навінкі высокай якасці',
+                        zh: '🎥 高质量新片',
+                        pt: '🎥 Novidades em alta qualidade',
+                        bg: '🎥 Новости високо качество',
+                        he: '🎥 חדשים באיכות גבוהה',
+                        cs: '🎥 Novinky ve vysoké kvalitě',
+                        ro: '🎥 Noutăți în calitate înaltă'
+                    },
+                    preset_horror: {
+                        ru: '👻 Ужасы и триллеры',
+                        en: '👻 Horror and thrillers',
+                        uk: '👻 Жахи і трилери',
+                        be: '👻 Жахі і трылеры',
+                        zh: '👻 恐怖与惊悚片',
+                        pt: '👻 Horror e thrillers',
+                        bg: '👻 Ужаси и трилъри',
+                        he: '👻 אימה ומתח',
+                        cs: '👻 Horory a thrillery',
+                        ro: '👻 Horror și thrillere'
+                    },
+                    preset_scifi: {
+                        ru: '🚀 Фантастика и фэнтези',
+                        en: '🚀 Science fiction',
+                        uk: '🚀 Наукова фантастика',
+                        be: '🚀 Навуковая фантастыка',
+                        zh: '🚀 科幻片',
+                        pt: '🚀 Ficção científica',
+                        bg: '🚀 Научна фантастика',
+                        he: '🚀 מדע בדיוני',
+                        cs: '🚀 Science fiction',
+                        ro: '🚀 Science fiction'
+                    },
+                    preset_anime: {
+                        ru: '🎌 Аниме-подборка',
+                        en: '🎌 Anime collection',
+                        uk: '🎌 Аніме-підбірка',
+                        be: '🎌 Анімэ-падборка',
+                        zh: '🎌 动漫合集',
+                        pt: '🎌 Coleção de anime',
+                        bg: '🎌 Аниме подборка',
+                        he: '🎌 אוסף אנימה',
+                        cs: '🎌 Anime kolekce',
+                        ro: '🎌 Colecție anime'
+                    },
+                    preset_russian: {
+                        ru: '🇷🇺 Русское кино',
+                        en: '🇷🇺 Russian cinema',
+                        uk: '🇷🇺 Російське кіно',
+                        be: '🇷🇺 Расейскае кіно',
+                        zh: '🇷🇺 俄罗斯电影',
+                        pt: '🇷🇺 Cinema russo',
+                        bg: '🇷🇺 Руско кино',
+                        he: '🇷🇺 קולנוע רוסי',
+                        cs: '🇷🇺 Ruské filmy',
+                        ro: '🇷🇺 Cinema rusă'
+                    },
+                    preset_asian: {
+                        ru: '🌏 Азиатское кино',
+                        en: '🌏 Asian cinema',
+                        uk: '🌏 Азійське кіно',
+                        be: '🌏 Азіяцкае кіно',
+                        zh: '🌏 亚洲电影',
+                        pt: '🌏 Cinema asiático',
+                        bg: '🌏 Азиатско кино',
+                        he: '🌏 קולנוע אסיאתי',
+                        cs: '🌏 Asijské filmy',
+                        ro: '🌏 Cinema asiatic'
                     }
                 });
             }
