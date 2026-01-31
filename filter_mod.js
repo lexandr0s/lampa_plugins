@@ -222,10 +222,10 @@
                 {"id": 10766,"title": "#{filter_genre_op}",checkbox: true},
                 {"id": 10767,"title": "#{filter_genre_tc}",checkbox: true},
                 {"id": 10768,"title": "#{filter_genre_mp}",checkbox: true},
-                {"id": 37,"title": "#{filter_genre_ve}",checkbox: true}
+                {"id": 37,"title": '#{filter_genre_ve}',checkbox: true}
             ]
         };
-        
+        /*
         data.sort = {
             title: '#{filter_sorted}',
             items: [
@@ -250,7 +250,67 @@
                 }
             ]
         };
-        
+        */
+		
+		
+		data.sort = {
+            title: '#{filter_sorted}',
+            items: [
+                {
+                    title: '#{filter_any}',
+                },
+                {
+                    title: '#{sort_popularity_desc}',
+                    sort: 'popularity.desc'
+                },
+                {
+                    title: '#{sort_rating_desc}',
+                    sort: 'vote_average.desc'
+                },
+                {
+                    title: '#{sort_release_desc}',
+                    sort: 'primary_release_date.desc'
+                }
+				/*,
+                {
+                    title: '#{sort_release_asc}',
+                    sort: 'primary_release_date.asc'
+                },
+                {
+                    title: '#{sort_revenue_desc}',
+                    sort: 'revenue.desc'
+                },
+                {
+                    title: '#{sort_votes_desc}',
+                    sort: 'vote_count.desc'
+                },
+                {
+                    title: '#{sort_title_asc}',
+                    sort: 'title.asc'
+                },
+                {
+                    title: '#{sort_title_desc}',
+                    sort: 'title.desc'
+                },
+                {
+                    title: '#{sort_popularity_asc}',
+                    sort: 'popularity.asc'
+                },
+                {
+                    title: '#{sort_rating_asc}',
+                    sort: 'vote_average.asc'
+                },
+                {
+                    title: '#{sort_votes_asc}',
+                    sort: 'vote_count.asc'
+                },
+                {
+                    title: '#{sort_revenue_asc}',
+                    sort: 'revenue.asc'
+                }*/
+            ]
+        };
+		
         data.quality = {
             title: '#{player_quality}',
             items: [
@@ -315,7 +375,7 @@
  * Пресеты фильтров
  */
 	const presets = {
-    // 1. Вечерний просмотр
+    // 1. Вечерный просмотр
     'evening': {
         name: 'preset_evening',
         apply: function() {
@@ -339,14 +399,14 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			data.quality.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			
-			resetLanguages();
-			
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            data.quality.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            
+            resetLanguages();
+            
         }
     },
     
@@ -376,13 +436,13 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			
-			data.quality.items.forEach(item => item.selected = false);
-			resetLanguages();
-			
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            
+            data.quality.items.forEach(item => item.selected = false);
+            resetLanguages();
+            
         }
     },
     
@@ -410,13 +470,13 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			
-			data.quality.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			resetLanguages();
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            
+            data.quality.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            resetLanguages();
         }
     },
     
@@ -448,12 +508,12 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			data.quality.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            data.quality.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            
         }
     },
     
@@ -465,20 +525,20 @@
             data.type.items.forEach(item => item.selected = false);
             data.type.items[0].selected = true; // Фильмы
             
-			resetGenres();
-			
+            resetGenres();
+            
             // Рейтинг: 8+
             data.rating.items.forEach(item => item.selected = false);
             data.rating.items[1].selected = true; // 8+
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			data.quality.items.forEach(item => item.selected = false);
-			resetLanguages();
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            data.quality.items.forEach(item => item.selected = false);
+            resetLanguages();
         }
     },
     
@@ -490,9 +550,9 @@
             data.type.items.forEach(item => item.selected = false);
             data.type.items[0].selected = true; // Фильмы
             
-			resetGenres();
-			data.pgrating.items.forEach(item => item.selected = false);
-			
+            resetGenres();
+            data.pgrating.items.forEach(item => item.selected = false);
+            
             // Год: текущий и предыдущий
             data.year.items.forEach(item => item.selected = false);
             const currentYear = new Date().getFullYear();
@@ -510,8 +570,12 @@
                 data.quality.items.forEach(item => item.selected = false);
                 data.quality.items[1].selected = true; // Высокое качество
             }
+            
+			// Сортировка: В топе
+            data.sort.items.forEach(item => item.selected = false);
+            data.sort.items[1].selected = true; // В топе
 			
-			resetLanguages();
+            resetLanguages();
         }
     },
     
@@ -529,11 +593,11 @@
             resetGenres();
             const horrorId = 27; // Ужасы
             const thrillerId = 53; // Триллер
-            const mysteryId = 9648; // Детектив
+           // const mysteryId = 9648; // Детектив
             
             setMovieGenre(horrorId, true);
             setMovieGenre(thrillerId, true);
-            setMovieGenre(mysteryId, true);
+            //setMovieGenre(mysteryId, true);
             
             // Рейтинг: 5.5+ (ближайший - 6+ или 4+)
             data.rating.items.forEach(item => item.selected = false);
@@ -541,12 +605,12 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			data.quality.items.forEach(item => item.selected = false);
-			resetLanguages();
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            data.quality.items.forEach(item => item.selected = false);
+            resetLanguages();
         }
     },
     
@@ -572,12 +636,12 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			data.quality.items.forEach(item => item.selected = false);
-			resetLanguages();
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            data.quality.items.forEach(item => item.selected = false);
+            resetLanguages();
         }
     },
     
@@ -585,9 +649,9 @@
     'russian': {
         name: 'preset_russian',
         apply: function() {
-			
-			resetGenres();
-			
+            
+            resetGenres();
+            
             // Тип: фильмы
             data.type.items.forEach(item => item.selected = false);
             data.type.items[0].selected = true; // Фильмы
@@ -598,12 +662,12 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			data.quality.items.forEach(item => item.selected = false);
-			data.rating.items.forEach(item => item.selected = false);
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            data.quality.items.forEach(item => item.selected = false);
+            data.rating.items.forEach(item => item.selected = false);
         }
     },
     
@@ -611,9 +675,9 @@
     'asian': {
         name: 'preset_asian',
         apply: function() {
-			
-			resetGenres();
-			
+            
+            resetGenres();
+            
             // Тип: фильмы
             data.type.items.forEach(item => item.selected = false);
             data.type.items[0].selected = true; // Фильмы
@@ -628,12 +692,12 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[3].selected = true; // В топе
-			
-			data.year.items.forEach(item => item.selected = false);
-			data.pgrating.items.forEach(item => item.selected = false);
-			data.quality.items.forEach(item => item.selected = false);
-			data.rating.items.forEach(item => item.selected = false);
+            data.sort.items[1].selected = true; // В топе
+            
+            data.year.items.forEach(item => item.selected = false);
+            data.pgrating.items.forEach(item => item.selected = false);
+            data.quality.items.forEach(item => item.selected = false);
+            data.rating.items.forEach(item => item.selected = false);
         }
     }
 };      
@@ -725,11 +789,396 @@
             }
         }
         
+        // ---- ПОЛЬЗОВАТЕЛЬСКИЕ ПРЕСЕТЫ ----
+        
         /**
-         * Меню быстрых пресетов
+         * Сохранить пользовательский пресет
+         */
+        function saveUserPreset() {
+            // Проверяем наличие необходимых компонентов
+            if (!window.Lampa.Modal || !window.Lampa.Input) {
+                console.error('Фильтр +: Отсутствуют необходимые компоненты (Modal, Input)');
+                if (window.Lampa.Noty) {
+                    window.Lampa.Noty.show('Не удалось открыть диалог сохранения', 2000);
+                }
+                return;
+            }
+            
+            // Запоминаем текущий контроллер для возврата
+            // Исправлено: используем статическое имя 'filter_plus' вместо Controller.active()
+            const previousController = 'filter_plus';
+            
+            // Создаем модальное окно
+			/*
+            window.Lampa.Modal.open({
+                title: window.Lampa.Lang.translate('preset_save_title') || 'Сохранение пресета',
+                html: $('<div></div>'),
+                size: 'medium',
+                onBack: () => {
+                    window.Lampa.Modal.close();
+                    window.Lampa.Controller.toggle(previousController);
+                }
+            });
+            */
+			
+			// Загружаем существующие пресеты
+            const userPresets = getUserPresets();
+			
+			// Проверяем лимит
+            if (userPresets.length >= 10) {
+                // Превышен лимит, предлагаем удалить пресет
+						
+				if (window.Lampa.Noty) {
+					window.Lampa.Noty.show(
+						window.Lampa.Lang.translate('preset_limit_exceeded') || 'Лимит пресетов превышен. Удалите хотя бы один пресет.', 
+						3000
+					);
+				}
+						
+						/*
+                        showDeletePresetMenu(() => {
+                            // После удаления пытаемся снова сохранить
+                            saveUserPresetAfterDelete(presetName, previousController);
+                        }, previousController);
+						*/
+                return;
+            }
+			
+			
+			
+            // Добавляем клавиатуру для ввода текста
+            setTimeout(() => {
+                window.Lampa.Input.edit({
+                    title: window.Lampa.Lang.translate('preset_save_desc') || 'Введите имя для нового пресета',
+                    value: '',
+                    nosave: true,
+                    textarea: false,
+                    align: 'center',
+                    keyboard: 'integrate'
+                }, (newValue) => {
+                    // Закрываем модальное окно
+                    //window.Lampa.Modal.close();
+                    
+                    if (!newValue || newValue.trim() === '') {
+                        // Пустое имя - показываем ошибку
+                        if (window.Lampa.Noty) {
+                            window.Lampa.Noty.show(
+                                window.Lampa.Lang.translate('preset_name_empty') || 'Имя пресета не может быть пустым', 
+                                2000
+                            );
+                        }
+                        // Исправлено: используем main() вместо Controller.toggle()
+                        main();
+                        return;
+                    }
+                    
+                    const presetName = newValue.trim();
+                    
+                    
+                    
+                    
+                    
+                    // Сохраняем новый пресет
+                    saveUserPresetData(presetName);
+                    
+                    // Исправлено: используем main() вместо Controller.toggle()
+                    main();
+                });
+            }, 100);
+        }
+        
+        /**
+         * Сохранить пресет после удаления другого (если был превышен лимит)
+         */
+        function saveUserPresetAfterDelete(presetName, previousController) {
+            const userPresets = getUserPresets();
+            
+            if (userPresets.length >= 10) {
+                // Все еще превышен лимит, показываем сообщение
+                if (window.Lampa.Noty) {
+                    window.Lampa.Noty.show(
+                        window.Lampa.Lang.translate('preset_limit_exceeded') || 'Лимит пресетов превышен. Удалите хотя бы один пресет.', 
+                        3000
+                    );
+                }
+                // Исправлено: используем main() вместо Controller.toggle()
+                main();
+                return;
+            }
+            
+            // Сохраняем пресет
+            saveUserPresetData(presetName);
+            // Исправлено: используем main() вместо Controller.toggle()
+            main();
+        }
+        
+        /**
+         * Сохранение данных пресета
+         */
+        function saveUserPresetData(presetName) {
+            const presetData = {
+                name: presetName,
+                timestamp: Date.now(),
+                filters: {}
+            };
+            
+            // Сохраняем все текущие настройки фильтров
+            Object.keys(data).forEach(key => {
+                if (data[key].items && data[key].items.length > 0) {
+                    presetData.filters[key] = {};
+                    
+                    // Сохраняем радио-кнопки (selected)
+                    const selectedIndex = data[key].items.findIndex(item => item.selected === true);
+                    if (selectedIndex !== -1) {
+                        presetData.filters[key].selectedIndex = selectedIndex;
+                    }
+                    
+                    // Сохраняем чекбоксы (checked)
+                    const hasCheckboxes = data[key].items.some(item => item.checkbox === true);
+                    if (hasCheckboxes) {
+                        presetData.filters[key].checkboxes = data[key].items.map(item => item.checked || false);
+                    }
+                }
+            });
+            
+            // Загружаем существующие пресеты
+            const userPresets = getUserPresets();
+            
+            // Проверяем, нет ли уже пресета с таким именем
+            const existingIndex = userPresets.findIndex(p => p.name === presetName);
+            if (existingIndex !== -1) {
+                // Заменяем существующий
+                userPresets[existingIndex] = presetData;
+            } else {
+                // Добавляем новый
+                userPresets.push(presetData);
+            }
+            
+            // Сохраняем в хранилище
+            window.Lampa.Storage.set('filterPlus_userPresets', userPresets);
+            
+            // Показываем уведомление
+            if (window.Lampa.Noty) {
+                const message = (window.Lampa.Lang.translate('preset_saved') || 'Пресет "%s" сохранен').replace('%s', presetName);
+                window.Lampa.Noty.show(message, 2000);
+            }
+        }
+        
+        /**
+         * Загрузить пользовательский пресет
+         */
+        function loadUserPresetMenu() {
+            const userPresets = getUserPresets();
+            
+            if (userPresets.length === 0) {
+                // Нет сохраненных пресетов
+                if (window.Lampa.Noty) {
+                    window.Lampa.Noty.show(
+                        window.Lampa.Lang.translate('no_user_presets') || 'Нет сохраненных пресетов', 
+                        2000
+                    );
+                }
+                return;
+            }
+            
+            // Создаем список пресетов для меню
+            const presetItems = userPresets.map((preset, index) => {
+                // Форматируем дату создания
+                const date = new Date(preset.timestamp);
+                const dateStr = date.toLocaleDateString();
+                
+                return {
+                    title: preset.name,
+                    description: (window.Lampa.Lang.translate('preset_created') || 'Создан') + ': ' + dateStr,
+                    presetIndex: index
+                };
+            });
+            
+            // Добавляем пункт "Удалить пресет" в начало
+            presetItems.unshift({
+                title: window.Lampa.Lang.translate('preset_delete') || '✖️ Удалить пресет',
+                deleteMenu: true
+            });
+            
+            window.Lampa.Select.show({
+                title: window.Lampa.Lang.translate('preset_load_title') || 'Мои пресеты',
+                items: presetItems,
+                onBack: main,
+                onSelect: (a) => {
+                    if (a.deleteMenu) {
+                        // Показываем меню удаления пресетов
+                        showDeletePresetMenu(main);
+                    } else {
+                        // Загружаем выбранный пресет
+                        loadUserPreset(a.presetIndex);
+                    }
+                }
+            });
+        }
+        
+        /**
+         * Загрузить конкретный пресет
+         */
+        function loadUserPreset(presetIndex) {
+            const userPresets = getUserPresets();
+            
+            if (presetIndex < 0 || presetIndex >= userPresets.length) {
+                console.error('Фильтр +: Неверный индекс пресета:', presetIndex);
+                return;
+            }
+            
+            const presetData = userPresets[presetIndex];
+            
+            console.log('Фильтр +: Загружаем пресет:', presetData.name);
+            
+            // Восстанавливаем настройки из пресета
+            Object.keys(presetData.filters).forEach(key => {
+                if (data[key] && data[key].items) {
+                    const filterData = presetData.filters[key];
+                    
+                    // Восстанавливаем радио-кнопки (selected)
+                    if (filterData.selectedIndex !== undefined) {
+                        const selectedIndex = filterData.selectedIndex;
+                        if (selectedIndex >= 0 && selectedIndex < data[key].items.length) {
+                            // Сбрасываем все selected
+                            data[key].items.forEach(item => item.selected = false);
+                            // Устанавливаем сохраненный selected
+                            data[key].items[selectedIndex].selected = true;
+                        }
+                    }
+                    
+                    // Восстанавливаем чекбоксы (checked)
+                    if (filterData.checkboxes && Array.isArray(filterData.checkboxes)) {
+                        const savedChecks = filterData.checkboxes;
+                        if (savedChecks.length === data[key].items.length) {
+                            savedChecks.forEach((checked, index) => {
+                                if (data[key].items[index]) {
+                                    data[key].items[index].checked = checked;
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+            
+            // Обновляем подзаголовки
+            for(var i in data) selected(data[i]);
+            
+            // Сохраняем настройки
+            saveFilterSettings();
+            
+            // Показываем уведомление
+            if (window.Lampa.Noty) {
+                const message = (window.Lampa.Lang.translate('preset_loaded') || 'Пресет "%s" загружен').replace('%s', presetData.name);
+                window.Lampa.Noty.show(message, 2000);
+            }
+            
+            // Возвращаемся в главное меню
+            main();
+        }
+        
+        /**
+         * Меню удаления пресетов
+         */
+        function showDeletePresetMenu(onBackCallback, previousController) {
+            const userPresets = getUserPresets();
+            
+            if (userPresets.length === 0) {
+                // Нет сохраненных пресетов
+                if (window.Lampa.Noty) {
+                    window.Lampa.Noty.show(
+                        window.Lampa.Lang.translate('no_user_presets') || 'Нет сохраненных пресетов', 
+                        2000
+                    );
+                }
+                if (onBackCallback) onBackCallback();
+                return;
+            }
+            
+            // Создаем список пресетов для удаления
+            const deleteItems = userPresets.map((preset, index) => {
+                const date = new Date(preset.timestamp);
+                const dateStr = date.toLocaleDateString();
+                
+                return {
+                    title: preset.name,
+                    description: (window.Lampa.Lang.translate('preset_created') || 'Создан') + ': ' + dateStr,
+                    presetIndex: index,
+                    delete: true
+                };
+            });
+            
+            window.Lampa.Select.show({
+                title: window.Lampa.Lang.translate('preset_delete_title') || 'Удаление пресетов',
+                items: deleteItems,
+                onBack: onBackCallback || main,
+                onSelect: (a) => {
+                    // Удаляем выбранный пресет
+                    deleteUserPreset(a.presetIndex);
+                    if (onBackCallback) onBackCallback();
+                    // Исправлено: используем main() вместо Controller.toggle()
+                    if (previousController) main();
+                }
+            });
+        }
+        
+        /**
+         * Удалить конкретный пресет
+         */
+        function deleteUserPreset(presetIndex) {
+            const userPresets = getUserPresets();
+            
+            if (presetIndex < 0 || presetIndex >= userPresets.length) {
+                console.error('Фильтр +: Неверный индекс пресета для удаления:', presetIndex);
+                return;
+            }
+            
+            const deletedPreset = userPresets[presetIndex];
+            
+            // Удаляем пресет
+            userPresets.splice(presetIndex, 1);
+            
+            // Сохраняем обновленный список
+            window.Lampa.Storage.set('filterPlus_userPresets', userPresets);
+            
+            // Показываем уведомление
+            if (window.Lampa.Noty) {
+                const message = (window.Lampa.Lang.translate('preset_deleted') || 'Пресет "%s" удален').replace('%s', deletedPreset.name);
+                window.Lampa.Noty.show(message, 2000);
+            }
+        }
+        
+        /**
+         * Получить список пользовательских пресетов
+         */
+        function getUserPresets() {
+            if (!window.Lampa.Storage) return [];
+            return window.Lampa.Storage.get('filterPlus_userPresets', []);
+        }
+        
+        /**
+         * Меню быстрых пресетов с пользовательскими пресетами
          */
         function presetsMenu() {
+            const userPresets = getUserPresets();
+            const hasUserPresets = userPresets.length > 0;
+            
             const presetItems = [
+                {
+                    title: window.Lampa.Lang.translate('preset_save_current') || '💾 Сохранить текущий пресет',
+                    savePreset: true
+                }
+            ];
+            
+            if (hasUserPresets) {
+                presetItems.push({
+                    title: window.Lampa.Lang.translate('preset_load_user') || '📂 Мои пресеты',
+                    loadUserPresets: true
+                });
+            }
+            
+            // Стандартные пресеты
+            presetItems.push(
                 {
                     title: window.Lampa.Lang.translate('preset_evening'),
                     preset: 'evening'
@@ -762,7 +1211,7 @@
                     title: window.Lampa.Lang.translate('preset_scifi'),
                     preset: 'scifi'
                 },
-                                {
+                {
                     title: window.Lampa.Lang.translate('preset_russian'),
                     preset: 'russian'
                 },
@@ -770,14 +1219,20 @@
                     title: window.Lampa.Lang.translate('preset_asian'),
                     preset: 'asian'
                 }
-            ];
+            );
             
             window.Lampa.Select.show({
                 title: window.Lampa.Lang.translate('title_presets'),
                 items: presetItems,
                 onBack: main,
                 onSelect: (a) => {
-                    applyPreset(a.preset);
+                    if (a.savePreset) {
+                        saveUserPreset();
+                    } else if (a.loadUserPresets) {
+                        loadUserPresetMenu();
+                    } else if (a.preset) {
+                        applyPreset(a.preset);
+                    }
                 }
             });
         }
@@ -1030,12 +1485,32 @@
          * Запрос для TMDB
          * @returns {string} - строка запроса
          */
-        function queryForTMDB(){
+                function queryForTMDB(){
             let query    = [];
             let cat      = data.type.items.find(s=>s.selected).cat;
             let type     = cat.indexOf('movie') >= 0 ? 'movie' : 'tv';
             let genres   = [];
             let languages = [];
+            
+            // Добавляем параметр сортировки для TMDB
+            const selectedSort = data.sort.items.find(s=>s.selected && s.sort);
+            if (selectedSort) {
+                let sortParam = selectedSort.sort;
+                
+                // Для сериалов меняем primary_release_date на first_air_date
+                if (type === 'tv') {
+                    if (sortParam === 'primary_release_date.desc') {
+                        sortParam = 'first_air_date.desc';
+                    } else if (sortParam === 'primary_release_date.asc') {
+                        sortParam = 'first_air_date.asc';
+                    }
+                }
+                
+                query.push('sort_by=' + sortParam);
+				//query.push('vote_average.lte=9');
+				query.push('vote_count.gte=200');
+				
+            }
 
             data.rating.items.forEach(a=>{
                 if(a.selected && (a.voite || a.start)){
@@ -1086,9 +1561,9 @@
             if(languages.length){
                 query.push('with_original_language='+languages.join('|'));
             }
-			
-			//query.push('include_adult=true');
-			
+            
+            //query.push('include_adult=true');
+            
 
             return 'discover/' + type + '?' + query.join('&');
         }
@@ -1163,7 +1638,29 @@
                 query.push('language='+languages.join(','));
             }
 
-            if(sort) query.push('sort='+sort.sort);
+            if(sort) {
+                // Преобразуем сортировки TMDB в соответствующие сортировки CUB
+                let cubSort;
+                switch(sort.sort) {
+                    case 'popularity.desc':
+                        cubSort = 'now_playing'; // Сейчас смотрят/популярные
+                        break;
+                    case 'vote_average.desc':
+                        cubSort = 'top'; // В топе
+                        break;
+                    case 'primary_release_date.desc':
+                    case 'first_air_date.desc':
+                        cubSort = 'now'; // Новинки
+                        break;
+                    case 'primary_release_date.asc':
+                    case 'first_air_date.asc':
+                        cubSort = 'airing'; // Идут сейчас (для сериалов)
+                        break;
+                    default:
+                        cubSort = sort.sort; // Используем оригинальное значение, если есть соответствие в CUB
+                }
+                query.push('sort=' + cubSort);
+            }
 
             if(quality) query.push('uhd=true');
 
@@ -1174,38 +1671,38 @@
          * Запуск поиска
          */
         function search(){
-			window.Lampa.Controller.toggle('content');
+            window.Lampa.Controller.toggle('content');
 
-			// Проверяем, выбран ли возрастной рейтинг (кроме "Любой")
-			let hasPGRating = false;
-			if (data.pgrating && data.pgrating.items) {
-				const selectedPGRating = data.pgrating.items.find(item => item.selected);
-				hasPGRating = selectedPGRating && selectedPGRating.pg !== undefined;
-			}
+            // Проверяем, выбран ли возрастной рейтинг (кроме "Любой")
+            let hasPGRating = false;
+            if (data.pgrating && data.pgrating.items) {
+                const selectedPGRating = data.pgrating.items.find(item => item.selected);
+                hasPGRating = selectedPGRating && selectedPGRating.pg !== undefined;
+            }
 
-			// Определяем источник поиска:
-			// Если выбран возрастной рейтинг (не "Любой") -> CUB
-			// В противном случае -> TMDB
-			let source = hasPGRating ? 'cub' : 'tmdb';
+            // Определяем источник поиска:
+            // Если выбран возрастной рейтинг (не "Любой") -> CUB
+            // В противном случае -> TMDB
+            let source = hasPGRating ? 'cub' : 'tmdb';
     
-			console.log(`Фильтр +: Источник поиска: ${source} (возрастной рейтинг: ${hasPGRating ? 'выбран' : 'не выбран'})`);
+            console.log(`Фильтр +: Источник поиска: ${source} (возрастной рейтинг: ${hasPGRating ? 'выбран' : 'не выбран'})`);
     
-			let query = source == 'cub' ? queryForCUB() : queryForTMDB();
+            let query = source == 'cub' ? queryForCUB() : queryForTMDB();
 
-			let activity = {
-				url: query,
-				title: window.Lampa.Lang.translate('title_filter') + ' +',
-				component: 'category_full',
-				source: source,
-				card_type: true,
-				page: 1
-			};
+            let activity = {
+                url: query,
+                title: window.Lampa.Lang.translate('title_filter') + ' +',
+                component: 'category_full',
+                source: source,
+                card_type: true,
+                page: 1
+            };
 
-			let object = window.Lampa.Activity.active();
+            let object = window.Lampa.Activity.active();
 
-			if(object.component == 'category_full' && (object.url.indexOf('discover') == 0 || object.url.indexOf('?cat=') == 0)) window.Lampa.Activity.replace(activity, true);
-			else window.Lampa.Activity.push(activity);
-		}
+            if(object.component == 'category_full' && (object.url.indexOf('discover') == 0 || object.url.indexOf('?cat=') == 0)) window.Lampa.Activity.replace(activity, true);
+            else window.Lampa.Activity.push(activity);
+        }
 
         /**
          * Выбор элемента с автосохранением
@@ -1344,7 +1841,8 @@
             _queryForCUB: queryForCUB,
             _resetAllFilters: resetAllFilters,
             _presets: presets,
-            _applyPreset: applyPreset
+            _applyPreset: applyPreset,
+            _getUserPresets: getUserPresets
         };
     }
     
@@ -1421,6 +1919,174 @@
                         cs: 'Předvolba použita',
                         ro: 'Preset aplicat'
                     },
+                    preset_save_title: {
+                        ru: 'Сохранение пресета',
+                        en: 'Save preset',
+                        uk: 'Збереження пресета',
+                        be: 'Захаванне прэсета',
+                        zh: '保存预设',
+                        pt: 'Salvar predefinição',
+                        bg: 'Запазване на предустановка',
+                        he: 'שמור קדימה',
+                        cs: 'Uložit předvolbu',
+                        ro: 'Salvați preset'
+                    },
+                    preset_save_desc: {
+                        ru: 'Введите имя для нового пресета',
+                        en: 'Enter a name for the new preset',
+                        uk: 'Введіть ім\'я для нового пресета',
+                        be: 'Увядзіце імя для новага прэсета',
+                        zh: '输入新预设的名称',
+                        pt: 'Digite um nome para a nova predefinição',
+                        bg: 'Въведете име за новата предустановка',
+                        he: 'הזן שם עבור הקדימה החדשה',
+                        cs: 'Zadejte název nové předvolby',
+                        ro: 'Introduceți un nume pentru noul preset'
+                    },
+                    preset_name_empty: {
+                        ru: 'Имя пресета не может быть пустым',
+                        en: 'Preset name cannot be empty',
+                        uk: 'Ім\'я пресета не може бути порожнім',
+                        be: 'Імя прэсета не можа быць пустым',
+                        zh: '预设名称不能为空',
+                        pt: 'O nome da predefinição não pode estar vazio',
+                        bg: 'Името на предустановката не може да бъде празно',
+                        he: 'שם הקדימה לא יכול להיות ריק',
+                        cs: 'Název předvolby nesmí být prázdný',
+                        ro: 'Numele presetului nu poate fi gol'
+                    },
+                    preset_limit_exceeded: {
+                        ru: 'Лимит пресетов превышен. Удалите хотя бы один пресет.',
+                        en: 'Preset limit exceeded. Delete at least one preset.',
+                        uk: 'Ліміт пресетів перевищено. Видаліть хоча б один пресет.',
+                        be: 'Ліміт прэсетаў перавышаны. Выдаліце хаця б адзін прэсет.',
+                        zh: '预设数量超限。请删除至少一个预设。',
+                        pt: 'Limite de predefinições excedido. Exclua pelo menos uma predefinição.',
+                        bg: 'Лимитът за предустановки е превишен. Изтрийте поне една предустановка.',
+                        he: 'הוגבל הקדימות. מחק לפחות קדימה אחת.',
+                        cs: 'Překročen limit předvoleb. Odstraňte alespoň jednu předvolbu.',
+                        ro: 'Limita de preseturi a fost depășită. Ștergeți cel puțin un preset.'
+                    },
+                    preset_saved: {
+                        ru: 'Пресет "%s" сохранен',
+                        en: 'Preset "%s" saved',
+                        uk: 'Пресет "%s" збережено',
+                        be: 'Прэсет "%s" захаваны',
+                        zh: '预设 "%s" 已保存',
+                        pt: 'Predefinição "%s" salva',
+                        bg: 'Предустановка "%s" запазена',
+                        he: 'הקדימה "%s" נשמרה',
+                        cs: 'Předvolba "%s" uložena',
+                        ro: 'Presetul "%s" a fost salvat'
+                    },
+                    preset_load_title: {
+                        ru: 'Мои пресеты',
+                        en: 'My presets',
+                        uk: 'Мої пресети',
+                        be: 'Мае прэсеты',
+                        zh: '我的预设',
+                        pt: 'Minhas predefinições',
+                        bg: 'Моите предустановки',
+                        he: 'הקדימות שלי',
+                        cs: 'Moje předvolby',
+                        ro: 'Preseturile mele'
+                    },
+                    preset_created: {
+                        ru: 'Создан',
+                        en: 'Created',
+                        uk: 'Створено',
+                        be: 'Створаны',
+                        zh: '创建于',
+                        pt: 'Criado',
+                        bg: 'Създаден',
+                        he: 'נוצר',
+                        cs: 'Vytvořeno',
+                        ro: 'Creat'
+                    },
+                    preset_delete: {
+                        ru: '✖️ Удалить пресет',
+                        en: '✖️ Delete preset',
+                        uk: '✖️ Видалити пресет',
+                        be: '✖️ Выдаліць прэсет',
+                        zh: '✖️ 删除预设',
+                        pt: '✖️ Excluir predefinição',
+                        bg: '✖️ Изтриване на предустановка',
+                        he: '✖️ מחק קדימה',
+                        cs: '✖️ Odstranit předvolbu',
+                        ro: '✖️ Ștergeți preset'
+                    },
+                    preset_delete_title: {
+                        ru: 'Удаление пресетов',
+                        en: 'Delete presets',
+                        uk: 'Видалення пресетів',
+                        be: 'Выдаленне прэсетаў',
+                        zh: '删除预设',
+                        pt: 'Excluir predefinições',
+                        bg: 'Изтриване на предустановки',
+                        he: 'מחיקת קדימות',
+                        cs: 'Odstranění předvoleb',
+                        ro: 'Ștergere preseturi'
+                    },
+                    preset_deleted: {
+                        ru: 'Пресет "%s" удален',
+                        en: 'Preset "%s" deleted',
+                        uk: 'Пресет "%s" видалено',
+                        be: 'Прэсет "%s" выдалены',
+                        zh: '预设 "%s" 已删除',
+                        pt: 'Predefinição "%s" excluída',
+                        bg: 'Предустановка "%s" изтрита',
+                        he: 'הקדימה "%s" נמחקה',
+                        cs: 'Předvolba "%s" odstraněna',
+                        ro: 'Presetul "%s" a fost șters'
+                    },
+                    no_user_presets: {
+                        ru: 'Нет сохраненных пресетов',
+                        en: 'No saved presets',
+                        uk: 'Немає збережених пресетів',
+                        be: 'Няма захаваных прэсетаў',
+                        zh: '没有保存的预设',
+                        pt: 'Nenhuma predefinição salva',
+                        bg: 'Няма запазени предустановки',
+                        he: 'אין קדימות שמורות',
+                        cs: 'Žádné uložené předvolby',
+                        ro: 'Nu există preseturi salvate'
+                    },
+                    preset_loaded: {
+                        ru: 'Пресет "%s" загружен',
+                        en: 'Preset "%s" loaded',
+                        uk: 'Пресет "%s" завантажено',
+                        be: 'Прэсет "%s" загружаны',
+                        zh: '预设 "%s" 已加载',
+                        pt: 'Predefinição "%s" carregada',
+                        bg: 'Предустановка "%s" заредена',
+                        he: 'הקדימה "%s" נטענה',
+                        cs: 'Předvolba "%s" načtena',
+                        ro: 'Presetul "%s" a fost încărcat'
+                    },
+                    preset_save_current: {
+                        ru: '💾 Сохранить текущий пресет',
+                        en: '💾 Save current preset',
+                        uk: '💾 Зберегти поточний пресет',
+                        be: '💾 Захаваць бягучы прэсет',
+                        zh: '💾 保存当前预设',
+                        pt: '💾 Salvar predefinição atual',
+                        bg: '💾 Запазване на текущата предустановка',
+                        he: '💾 שמור קדימה נוכחית',
+                        cs: '💾 Uložit aktuální předvolbu',
+                        ro: '💾 Salvați presetul curent'
+                    },
+                    preset_load_user: {
+                        ru: '📂 Мои пресеты',
+                        en: '📂 My presets',
+                        uk: '📂 Мої пресети',
+                        be: '📂 Мае прэсеты',
+                        zh: '📂 我的预设',
+                        pt: '📂 Minhas predefinições',
+                        bg: '📂 Моите предустановки',
+                        he: '📂 הקדימות שלי',
+                        cs: '📂 Moje předvolby',
+                        ro: '📂 Preseturile mele'
+                    },
                     // Названия пресетов (без описаний)
                     preset_evening: {
                         ru: '🎬 Вечерний просмотр',
@@ -1435,16 +2101,16 @@
                         ro: '🎬 Vizionare seara'
                     },
                     preset_family: {
-                        ru: '👨‍👩‍👧‍👦 Семейный вечер',
-                        en: '👨‍👩‍👧‍👦 Family evening',
-                        uk: '👨‍👩‍👧‍👦 Сімейний вечір',
-                        be: '👨‍👩‍👧‍👦 Сямейны вечар',
-                        zh: '👨‍👩‍👧‍👦 家庭之夜',
-                        pt: '👨‍👩‍👧‍👦 Noite em família',
-                        bg: '👨‍👩‍👧‍👦 Семейна вечер',
-                        he: '👨‍👩‍👧‍👦 ערב משפחתי',
-                        cs: '👨‍👩‍👧‍👦 Rodinný večer',
-                        ro: '👨‍👩‍👧‍👦 Seară în familie'
+                        ru: '👪 Семейный вечер',
+                        en: '👪 Family evening',
+                        uk: '👪 Сімейний вечір',
+                        be: '👪 Сямейны вечар',
+                        zh: '👪 家庭之夜',
+                        pt: '👪 Noite em família',
+                        bg: '👪 Семейна вечер',
+                        he: '👪 ערב משפחתי',
+                        cs: '👪 Rodinný večer',
+                        ro: '👪 Seară în familie'
                     },
                     preset_action: {
                         ru: '💥 Экшен-марафон',
@@ -1553,6 +2219,151 @@
                         he: '🌏 קולנוע אסיאתי',
                         cs: '🌏 Asijské filmy',
                         ro: '🌏 Cinema asiatic'
+                    },
+					//Переводы сортировок
+					sort_popularity_desc: {
+                        ru: 'Популярные',
+                        en: 'Popular',
+                        uk: 'Популярні',
+                        be: 'Папулярныя',
+                        zh: '流行',
+                        pt: 'Popular',
+                        bg: 'Популярни',
+                        he: 'פופולרי',
+                        cs: 'Populární',
+                        ro: 'Popular'
+                    },
+                    sort_rating_desc: {
+                        ru: 'По рейтингу',
+                        en: 'By rating',
+                        uk: 'За рейтингом',
+                        be: 'Па рэйтынгу',
+                        zh: '按评分',
+                        pt: 'Por classificação',
+                        bg: 'По рейтинг',
+                        he: 'לפי דירוג',
+                        cs: 'Podle hodnocení',
+                        ro: 'După rating'
+                    },
+                    sort_release_desc: {
+                        ru: 'Новинки',
+                        en: 'New releases',
+                        uk: 'Новинки',
+                        be: 'Навінкі',
+                        zh: '新发布',
+                        pt: 'Novos lançamentos',
+                        bg: 'Нови издания',
+                        he: 'מהדורות חדשות',
+                        cs: 'Nová vydání',
+                        ro: 'Lansări noi'
+                    },
+                    sort_release_asc: {
+                        ru: 'Старые → новые',
+                        en: 'Old → new',
+                        uk: 'Старі → нові',
+                        be: 'Старыя → новыя',
+                        zh: '旧 → 新',
+                        pt: 'Velho → novo',
+                        bg: 'Стари → нови',
+                        he: 'ישן → חדש',
+                        cs: 'Starý → nový',
+                        ro: 'Vechi → nou'
+                    },
+                    sort_revenue_desc: {
+                        ru: 'Кассовые сборы',
+                        en: 'Box office',
+                        uk: 'Касові збори',
+                        be: 'Касавыя зборы',
+                        zh: '票房',
+                        pt: 'Bilheteria',
+                        bg: 'Бокс офис',
+                        he: 'קופות',
+                        cs: 'Tržby',
+                        ro: 'Box office'
+                    },
+                    sort_votes_desc: {
+                        ru: 'Количество голосов',
+                        en: 'Vote count',
+                        uk: 'Кількість голосів',
+                        be: 'Колькасць галасоў',
+                        zh: '投票数',
+                        pt: 'Contagem de votos',
+                        bg: 'Брой гласове',
+                        he: 'ספירת קולות',
+                        cs: 'Počet hlasů',
+                        ro: 'Număr de voturi'
+                    },
+                    sort_title_asc: {
+                        ru: 'Название (А-Я)',
+                        en: 'Title (A-Z)',
+                        uk: 'Назва (А-Я)',
+                        be: 'Назва (А-Я)',
+                        zh: '标题 (A-Z)',
+                        pt: 'Título (A-Z)',
+                        bg: 'Заглавие (А-Я)',
+                        he: 'כותרת (א-ת)',
+                        cs: 'Název (A-Ž)',
+                        ro: 'Titlu (A-Z)'
+                    },
+                    sort_title_desc: {
+                        ru: 'Название (Я-А)',
+                        en: 'Title (Z-A)',
+                        uk: 'Назва (Я-А)',
+                        be: 'Назва (Я-А)',
+                        zh: '标题 (Z-A)',
+                        pt: 'Título (Z-A)',
+                        bg: 'Заглавие (Я-А)',
+                        he: 'כותרת (ת-א)',
+                        cs: 'Název (Ž-A)',
+                        ro: 'Titlu (Z-A)'
+                    },
+                    sort_popularity_asc: {
+                        ru: 'Непопулярные',
+                        en: 'Unpopular',
+                        uk: 'Непопулярні',
+                        be: 'Няпапулярныя',
+                        zh: '不流行',
+                        pt: 'Não popular',
+                        bg: 'Непопулярни',
+                        he: 'לא פופולרי',
+                        cs: 'Nepopulární',
+                        ro: 'Nepopular'
+                    },
+                    sort_rating_asc: {
+                        ru: 'Рейтинг (низкий)',
+                        en: 'Rating (low)',
+                        uk: 'Рейтинг (низький)',
+                        be: 'Рэйтынг (нізкі)',
+                        zh: '评分（低）',
+                        pt: 'Classificação (baixa)',
+                        bg: 'Рейтинг (нисък)',
+                        he: 'דירוג (נמוך)',
+                        cs: 'Hodnocení (nízké)',
+                        ro: 'Rating (scăzut)'
+                    },
+                    sort_votes_asc: {
+                        ru: 'Голосов (мало)',
+                        en: 'Votes (few)',
+                        uk: 'Голосів (мало)',
+                        be: 'Галасоў (мала)',
+                        zh: '票数（少）',
+                        pt: 'Votos (poucos)',
+                        bg: 'Гласове (малко)',
+                        he: 'קולות (מעט)',
+                        cs: 'Hlasy (málo)',
+                        ro: 'Voturi (puține)'
+                    },
+                    sort_revenue_asc: {
+                        ru: 'Сборы (малые)',
+                        en: 'Revenue (low)',
+                        uk: 'Збори (малі)',
+                        be: 'Зборы (малыя)',
+                        zh: '收入（低）',
+                        pt: 'Receita (baixa)',
+                        bg: 'Приходи (ниски)',
+                        he: 'הכנסות (נמוכות)',
+                        cs: 'Tržby (nízké)',
+                        ro: 'Venituri (scăzute)'
                     }
                 });
             }
