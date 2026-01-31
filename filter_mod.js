@@ -325,7 +325,7 @@
             
             // Рейтинг: 6.5+ (ближайший - 6+)
             data.rating.items.forEach(item => item.selected = false);
-            data.rating.items[2].selected = true; // 6+
+            //data.rating.items[2].selected = true; // 6+
             
             // Жанры: Драма, Комедия, Мелодрама
             resetGenres();
@@ -345,6 +345,8 @@
 			data.quality.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
 			
+			resetLanguages();
+			
         }
     },
     
@@ -363,14 +365,14 @@
             // Жанры: Семейный, Мультфильм, Приключения
             resetGenres();
             const familyId = 10751; // Семейный
-            const adventureId = 12; // Приключения
+            //const adventureId = 12; // Приключения
             
             setMovieGenre(familyId, true);
-            setMovieGenre(adventureId, true);
+            //setMovieGenre(adventureId, true);
             
             // Рейтинг: 6+
             data.rating.items.forEach(item => item.selected = false);
-            data.rating.items[2].selected = true; // 6+
+            //data.rating.items[2].selected = true; // 6+
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
@@ -379,6 +381,8 @@
 			data.year.items.forEach(item => item.selected = false);
 			
 			data.quality.items.forEach(item => item.selected = false);
+			resetLanguages();
+			
         }
     },
     
@@ -402,7 +406,7 @@
             
             // Рейтинг: 6+
             data.rating.items.forEach(item => item.selected = false);
-            data.rating.items[2].selected = true; // 6+
+            //data.rating.items[2].selected = true; // 6+
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
@@ -412,6 +416,7 @@
 			
 			data.quality.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
+			resetLanguages();
         }
     },
     
@@ -433,7 +438,7 @@
             
             // Рейтинг: 6.5+ (ближайший - 6+)
             data.rating.items.forEach(item => item.selected = false);
-            data.rating.items[2].selected = true; // 6+
+            //data.rating.items[2].selected = true; // 6+
             
             // Языки: RU, EN, FR
             resetLanguages();
@@ -448,6 +453,7 @@
 			data.year.items.forEach(item => item.selected = false);
 			data.quality.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
+			
         }
     },
     
@@ -472,6 +478,7 @@
 			data.year.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
 			data.quality.items.forEach(item => item.selected = false);
+			resetLanguages();
         }
     },
     
@@ -496,13 +503,15 @@
             
             // Рейтинг: 7+ (ближайший - 6+)
             data.rating.items.forEach(item => item.selected = false);
-            data.rating.items[2].selected = true; // 6+
+            //data.rating.items[2].selected = true; // 6+
             
             // Качество: HD/UHD
             if (data.quality.items.length > 1) {
                 data.quality.items.forEach(item => item.selected = false);
                 data.quality.items[1].selected = true; // Высокое качество
             }
+			
+			resetLanguages();
         }
     },
     
@@ -528,7 +537,7 @@
             
             // Рейтинг: 5.5+ (ближайший - 6+ или 4+)
             data.rating.items.forEach(item => item.selected = false);
-            data.rating.items[3].selected = true; // 4+ (т.к. для ужасов оценки часто занижены)
+            //data.rating.items[3].selected = true; // 4+ (т.к. для ужасов оценки часто занижены)
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
@@ -537,6 +546,7 @@
 			data.year.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
 			data.quality.items.forEach(item => item.selected = false);
+			resetLanguages();
         }
     },
     
@@ -558,7 +568,7 @@
             
             // Рейтинг: 6.5+ (ближайший - 6+)
             data.rating.items.forEach(item => item.selected = false);
-            data.rating.items[2].selected = true; // 6+
+            //data.rating.items[2].selected = true; // 6+
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
@@ -567,6 +577,7 @@
 			data.year.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
 			data.quality.items.forEach(item => item.selected = false);
+			resetLanguages();
         }
     },
     
@@ -592,6 +603,7 @@
 			data.year.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
 			data.quality.items.forEach(item => item.selected = false);
+			data.rating.items.forEach(item => item.selected = false);
         }
     },
     
@@ -621,6 +633,7 @@
 			data.year.items.forEach(item => item.selected = false);
 			data.pgrating.items.forEach(item => item.selected = false);
 			data.quality.items.forEach(item => item.selected = false);
+			data.rating.items.forEach(item => item.selected = false);
         }
     }
 };      
@@ -1065,7 +1078,7 @@
             if(cat == 'movie' || cat == 'tv') query.push('without_genres=16');
 
             if(genres.length){
-                query.push('with_genres='+genres.join(','));
+                query.push('with_genres='+genres.join('|'));
             }
 
             if(cat == 'anime' && languages.indexOf('ja') == -1) languages.push('ja');
@@ -1073,11 +1086,14 @@
             if(languages.length){
                 query.push('with_original_language='+languages.join('|'));
             }
+			
+			//query.push('include_adult=true');
+			
 
             return 'discover/' + type + '?' + query.join('&');
         }
 
-        /**
+ /**
          * Запрос для CUB
          * @returns {string} - строка запроса
          */
@@ -1158,25 +1174,38 @@
          * Запуск поиска
          */
         function search(){
-            window.Lampa.Controller.toggle('content');
+			window.Lampa.Controller.toggle('content');
 
-            let source = window.Lampa.Storage.field('source');
-            let query  = source == 'cub' ? queryForCUB() : queryForTMDB();
+			// Проверяем, выбран ли возрастной рейтинг (кроме "Любой")
+			let hasPGRating = false;
+			if (data.pgrating && data.pgrating.items) {
+				const selectedPGRating = data.pgrating.items.find(item => item.selected);
+				hasPGRating = selectedPGRating && selectedPGRating.pg !== undefined;
+			}
 
-            let activity = {
-                url: query,
-                title: window.Lampa.Lang.translate('title_filter') + ' +',
-                component: 'category_full',
-                source: source == 'cub' ? 'cub' : 'tmdb',
-                card_type: true,
-                page: 1
-            };
+			// Определяем источник поиска:
+			// Если выбран возрастной рейтинг (не "Любой") -> CUB
+			// В противном случае -> TMDB
+			let source = hasPGRating ? 'cub' : 'tmdb';
+    
+			console.log(`Фильтр +: Источник поиска: ${source} (возрастной рейтинг: ${hasPGRating ? 'выбран' : 'не выбран'})`);
+    
+			let query = source == 'cub' ? queryForCUB() : queryForTMDB();
 
-            let object = window.Lampa.Activity.active();
+			let activity = {
+				url: query,
+				title: window.Lampa.Lang.translate('title_filter') + ' +',
+				component: 'category_full',
+				source: source,
+				card_type: true,
+				page: 1
+			};
 
-            if(object.component == 'category_full' && (object.url.indexOf('discover') == 0 || object.url.indexOf('?cat=') == 0)) window.Lampa.Activity.replace(activity, true);
-            else window.Lampa.Activity.push(activity);
-        }
+			let object = window.Lampa.Activity.active();
+
+			if(object.component == 'category_full' && (object.url.indexOf('discover') == 0 || object.url.indexOf('?cat=') == 0)) window.Lampa.Activity.replace(activity, true);
+			else window.Lampa.Activity.push(activity);
+		}
 
         /**
          * Выбор элемента с автосохранением
