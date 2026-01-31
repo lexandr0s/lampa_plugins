@@ -405,6 +405,96 @@
         }
         
         /**
+         * Сброс всех фильтров к значениям по умолчанию
+         */
+        function resetAllFilters() {
+            console.log('Фильтр +: Сброс всех фильтров');
+            
+            // Сбрасываем тип контента к первому пункту (фильмы)
+            data.type.items.forEach((item, index) => {
+                item.selected = (index === 0);
+            });
+            
+            // Сбрасываем рейтинг к "Любой"
+            data.rating.items.forEach((item, index) => {
+                item.selected = (index === 0);
+            });
+            
+            // Сбрасываем возрастной рейтинг к "Любой"
+            data.pgrating.items.forEach((item, index) => {
+                item.selected = (index === 0);
+            });
+            
+            // Сбрасываем язык к "Любой"
+            data.language.items.forEach((item, index) => {
+                if (item.checkbox) {
+                    if (item.any) {
+                        item.checked = true;
+                    } else {
+                        item.checked = false;
+                    }
+                }
+            });
+            
+            // Сбрасываем год к "Любой"
+            data.year.items.forEach((item, index) => {
+                item.selected = (index === 0);
+            });
+            
+            // Сбрасываем сортировку к "Любой"
+            data.sort.items.forEach((item, index) => {
+                item.selected = (index === 0);
+            });
+            
+            // Сбрасываем качество к "Любой"
+            data.quality.items.forEach((item, index) => {
+                item.selected = (index === 0);
+            });
+            
+            // Сбрасываем жанры фильмов к "Любой"
+            data.genres_movie.items.forEach((item, index) => {
+                if (item.checkbox) {
+                    if (item.any) {
+                        item.checked = true;
+                    } else {
+                        item.checked = false;
+                    }
+                }
+            });
+            
+            // Сбрасываем жанры сериалов к "Любой"
+            data.genres_tv.items.forEach((item, index) => {
+                if (item.checkbox) {
+                    if (item.any) {
+                        item.checked = true;
+                    } else {
+                        item.checked = false;
+                    }
+                }
+            });
+            
+            // Обновляем подзаголовки
+            for(var i in data) selected(data[i]);
+            
+            // Удаляем сохраненные настройки
+            if (window.Lampa.Storage) {
+                window.Lampa.Storage.remove('filterPlus_settings');
+                console.log('Фильтр +: Настройки удалены из хранилища');
+            }
+            
+            // Сохраняем сброшенное состояние
+            saveFilterSettings();
+            
+            // Показываем сообщение об успешном сбросе
+            if (window.Lampa.Noty) {
+                window.Lampa.Noty.show(window.Lampa.Lang.translate('filter_reset_success') || 'Фильтры сброшены', 2000);
+            }
+            
+            // Возвращаемся в главное меню
+            main();
+        }
+        
+        /**
          * Главное меню фильтрации
          */
         function main(){
@@ -417,6 +507,9 @@
             let items = [{
                 title: window.Lampa.Lang.translate('search_start'),
                 search: true
+            },{
+                title: window.Lampa.Lang.translate('filter_reset_all'),
+                reset: true
             },data.type,data.rating,data['genres_'+type],data.language,data.year];
 
             if(window.Lampa.Storage.field('source') == 'cub') items.push(data.pgrating,data.sort,data.quality);
@@ -441,6 +534,7 @@
                 },
                 onSelect: (a)=>{
                     if(a.search) search();
+                    else if(a.reset) resetAllFilters();
                     else submenu(a);
                 }
             });
@@ -745,7 +839,8 @@
             // Для отладки экспортируем данные
             _data: data,
             _queryForTMDB: queryForTMDB,
-            _queryForCUB: queryForCUB
+            _queryForCUB: queryForCUB,
+            _resetAllFilters: resetAllFilters
         };
     }
     
@@ -772,7 +867,31 @@
                         he: 'םסנן +',
                         cs: 'Výběr +',
                         ro: 'Selecţie +'  
-                    }  
+                    },
+                    filter_reset_all: {
+                        ru: 'Сброс фильтра',
+                        en: 'Reset filter',
+                        uk: 'Скинути фільтр',
+                        be: 'Скінуць фільтр',
+                        zh: '重置过滤器',
+                        pt: 'Redefinir filtro',
+                        bg: 'Нулиране на филтъра',
+                        he: 'אפס מסנן',
+                        cs: 'Resetovat filtr',
+                        ro: 'Resetați filtrul'
+                    },
+                    filter_reset_success: {
+                        ru: 'Фильтры сброшены',
+                        en: 'Filters reset',
+                        uk: 'Фільтри скинуті',
+                        be: 'Фільтры скінуты',
+                        zh: '过滤器已重置',
+                        pt: 'Filtros redefinidos',
+                        bg: 'Филтрите са нулирани',
+                        he: 'מסננים אופסו',
+                        cs: 'Filtry resetovány',
+                        ro: 'Filtrele au fost resetate'
+                    }
                 });
             }
             
