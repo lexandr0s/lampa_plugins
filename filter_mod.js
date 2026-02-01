@@ -406,6 +406,12 @@
             data.pgrating.items.forEach(item => item.selected = false);
             
             resetLanguages();
+            //setLanguage('ru', true);
+            setLanguage('en', true);
+            setLanguage('fr', true);
+			setLanguage('ko', true);
+            //setLanguage('ja', true);
+            setLanguage('zh|cn', true);
             
         }
     },
@@ -491,13 +497,13 @@
             // Жанры: Мелодрама, Комедия
             resetGenres();
             const romanceId = 10749; // Мелодрама
-            const comedyId = 35; // Комедия
+            //const comedyId = 35; // Комедия
             
             setMovieGenre(romanceId, true);
-            setMovieGenre(comedyId, true);
+            //setMovieGenre(comedyId, true);
             
             // Рейтинг: 6.5+ (ближайший - 6+)
-            data.rating.items.forEach(item => item.selected = false);
+            //data.rating.items.forEach(item => item.selected = false);
             //data.rating.items[2].selected = true; // 6+
             
             // Языки: RU, EN, FR
@@ -508,7 +514,7 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[1].selected = true; // В топе
+            data.sort.items[2].selected = true; // В топе
             
             data.year.items.forEach(item => item.selected = false);
             data.quality.items.forEach(item => item.selected = false);
@@ -533,15 +539,24 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[1].selected = true; // В топе
+            data.sort.items[2].selected = true; // В топе
             
             data.year.items.forEach(item => item.selected = false);
             data.pgrating.items.forEach(item => item.selected = false);
             data.quality.items.forEach(item => item.selected = false);
-            resetLanguages();
+            
+			resetLanguages();
+            setLanguage('ru', true);
+            setLanguage('en', true);
+            setLanguage('fr', true);
+			
+            
+			
         }
     },
     
+	
+	
     // 6. Новинки высокого качества
     'new_hd': {
         name: 'preset_new_hd',
@@ -573,7 +588,7 @@
             
 			// Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[1].selected = true; // В топе
+            data.sort.items[3].selected = true; // В топе
 			
             resetLanguages();
         }
@@ -1691,14 +1706,25 @@
                 );
                 hasRussianLanguage = !!selectedRussian;
             }
+			
+			// Проверяем, выбрано ли высокое качество
+            let hasHighQuality = false;
+            if (data.quality && data.quality.items) {
+                const selectedQuality = data.quality.items.find(item => item.selected && item.uhd === true);
+                hasHighQuality = !!selectedQuality;
+            }
 
             // Определяем источник поиска:
-            // 1. Если выбран русский язык -> CUB (для лучшего поиска русскоязычного контента)
-            // 2. Если выбран возрастной рейтинг (не "Любой") -> CUB
-            // 3. В противном случае -> TMDB
+            // 1. Если выбрано высокое качество -> CUB
+            // 2. Если выбран русский язык -> CUB
+            // 3. Если выбран возрастной рейтинг (не "Любой") -> CUB
+            // 4. В противном случае -> TMDB
             let source = 'tmdb'; // по умолчанию TMDB
             
-            if (hasRussianLanguage) {
+            if (hasHighQuality) {
+                source = 'cub';
+                console.log('Фильтр +: Источник CUB выбран (высокое качество)');
+            } else if (hasRussianLanguage) {
                 source = 'cub';
                 console.log('Фильтр +: Источник CUB выбран (русский язык)');
             } else if (hasPGRating) {
@@ -1708,7 +1734,7 @@
                 console.log('Фильтр +: Источник TMDB выбран (по умолчанию)');
             }
     
-            console.log(`Фильтр +: Итоговый источник: ${source} (русский: ${hasRussianLanguage}, возрастной рейтинг: ${hasPGRating})`);
+            console.log(`Фильтр +: Итоговый источник: ${source} (высокое качество: ${hasHighQuality}, русский: ${hasRussianLanguage}, возрастной рейтинг: ${hasPGRating})`);
     
             let query = source == 'cub' ? queryForCUB() : queryForTMDB();
 
