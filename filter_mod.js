@@ -1525,7 +1525,7 @@
 				//query.push('vote_average.lte=9');
 				if (sortParam === 'vote_average.desc') {
 					
-					query.push('vote_count.gte=300');
+					query.push('vote_count.gte=50');
 				}
 				
             }
