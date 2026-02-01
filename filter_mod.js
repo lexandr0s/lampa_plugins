@@ -707,7 +707,7 @@
             
             // Сортировка: В топе
             data.sort.items.forEach(item => item.selected = false);
-            data.sort.items[1].selected = true; // В топе
+            data.sort.items[2].selected = true; // В топе
             
             data.year.items.forEach(item => item.selected = false);
             data.pgrating.items.forEach(item => item.selected = false);
@@ -1581,6 +1581,8 @@
             }
             
             //query.push('include_adult=true');
+			//query.push('language=ru');
+			//query.push('region=US');
             
 
             return 'discover/' + type + '?' + query.join('&');
