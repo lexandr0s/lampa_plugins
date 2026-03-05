@@ -330,10 +330,114 @@
                 {
                     title: '#{filter_any}',
                     any: true
+                },
+                {
+                    title: '#{year_range_manual}',
+                    custom: true,
+                    from: null,
+                    to: null
                 }
             ]
         };
         
+		/**
+         * Ввод пользовательского диапазона годов
+         */
+        function inputYearRange() {
+            if (!window.Lampa.Modal || !window.Lampa.Input) {
+                console.error('Фильтр +: Отсутствуют компоненты для ввода');
+                return;
+            }
+            
+            const previousController = 'filter_plus';
+            
+            // Создаем модальное окно
+            window.Lampa.Modal.open({
+                title: window.Lampa.Lang.translate('year_range_title') || 'Диапазон годов',
+                html: $('<div></div>'),
+                size: 'medium',
+                onBack: () => {
+                    window.Lampa.Modal.close();
+                    main();
+                }
+            });
+            
+            // Сначала вводим ОТ (с какого года)
+            setTimeout(() => {
+                window.Lampa.Input.edit({
+                    title: window.Lampa.Lang.translate('year_from') || 'От (год):',
+                    value: '2000',
+                    nosave: true,
+                    textarea: false,
+                    align: 'center',
+                    keyboard: 'number'
+                }, (fromValue) => {
+                    if (!fromValue || fromValue.trim() === '') {
+                        window.Lampa.Modal.close();
+                        main();
+                        return;
+                    }
+                    
+                    const fromYear = parseInt(fromValue.trim());
+                    if (isNaN(fromYear) || fromYear < 1900 || fromYear > new Date().getFullYear() + 5) {
+                        if (window.Lampa.Noty) {
+                            window.Lampa.Noty.show('Некорректный год', 2000);
+                        }
+                        window.Lampa.Modal.close();
+                        main();
+                        return;
+                    }
+                    
+                    // Затем вводим ДО (по какой год)
+                    window.Lampa.Input.edit({
+                        title: window.Lampa.Lang.translate('year_to') || 'До (год):',
+                        value: String(fromYear + 5),
+                        nosave: true,
+                        textarea: false,
+                        align: 'center',
+                        keyboard: 'number'
+                    }, (toValue) => {
+                        window.Lampa.Modal.close();
+                        
+                        if (!toValue || toValue.trim() === '') {
+                            main();
+                            return;
+                        }
+                        
+                        const toYear = parseInt(toValue.trim());
+                        if (isNaN(toYear) || toYear < fromYear || toYear > new Date().getFullYear() + 5) {
+                            if (window.Lampa.Noty) {
+                                window.Lampa.Noty.show('Некорректный год', 2000);
+                            }
+                            main();
+                            return;
+                        }
+                        
+                        // Сбрасываем все остальные пункты года
+                        data.year.items.forEach(item => {
+                            item.selected = false;
+                        });
+                        
+                        // Находим и выделяем пункт custom range
+                        const customItem = data.year.items.find(item => item.custom);
+                        if (customItem) {
+                            customItem.selected = true;
+                            customItem.from = fromYear;
+                            customItem.to = toYear;
+                            customItem.title = fromYear + '-' + toYear;
+                        }
+                        
+                        // Обновляем подзаголовок
+                        selected(data.year);
+                        // Сохраняем настройки (custom диапазон сохранится автоматически)
+                        saveFilterSettings();
+                        main();
+                    });
+                });
+            }, 100);
+        }
+		
+		
         for(let a = 18; a >= 0; a-=3){
             data.pgrating.items.push({
                 title: a + '+',
@@ -1272,6 +1376,16 @@
                         if (selectedIndex !== -1) {
                             if (!state.radio) state.radio = {};
                             state.radio[key] = selectedIndex;
+                            
+                            // Для года с custom диапазоном сохраняем дополнительные данные
+                            if (key === 'year' && data[key].items[selectedIndex] && data[key].items[selectedIndex].custom) {
+                                if (!state.custom) state.custom = {};
+                                state.custom.year = {
+                                    from: data[key].items[selectedIndex].from,
+                                    to: data[key].items[selectedIndex].to,
+                                    title: data[key].items[selectedIndex].title
+                                };
+                            }
                         }
                         
                         // Для чекбоксов - сохраняем массив состояний
@@ -1313,8 +1427,23 @@
                             if (selectedIndex >= 0 && selectedIndex < data[key].items.length) {
                                 // Сбрасываем все selected
                                 data[key].items.forEach(item => item.selected = false);
-                                // Устанавливаем сохраненный selected
-                                data[key].items[selectedIndex].selected = true;
+                                
+                                // Особый случай для года с custom диапазоном
+                                if (key === 'year' && state.custom && state.custom.year) {
+                                    // Ищем custom элемент
+                                    const customItem = data[key].items.find(item => item.custom);
+                                    if (customItem && data[key].items[selectedIndex] === customItem) {
+                                        customItem.selected = true;
+                                        customItem.from = state.custom.year.from;
+                                        customItem.to = state.custom.year.to;
+                                        customItem.title = state.custom.year.title;
+                                    } else {
+                                        data[key].items[selectedIndex].selected = true;
+                                    }
+                                } else {
+                                    // Обычное восстановление
+                                    data[key].items[selectedIndex].selected = true;
+                                }
                                 console.log(`Восстановлен ${key}: selected[${selectedIndex}]`);
                             }
                         }
@@ -1379,9 +1508,14 @@
                 }
             });
             
-            // Сбрасываем год к "Любой"
+            // Сбрасываем год к "Любой" и сбрасываем custom диапазон
             data.year.items.forEach((item, index) => {
                 item.selected = (index === 0);
+                if (item.custom) {
+                    item.from = null;
+                    item.to = null;
+                    item.title = window.Lampa.Lang.translate('year_range_manual') || '✎ Свой диапазон';
+                }
             });
             
             // Сбрасываем сортировку к "Любой"
@@ -1547,15 +1681,18 @@
                 if(a.checked && !a.any) languages.push(a.code);
             });
 
-            data.year.items.forEach(a=>{
+                        data.year.items.forEach(a=>{
                 if(a.selected && !a.any){
                     let need = type == 'movie' ? 'primary_release_date' : 'first_air_date';
-
-                    if(a.title.indexOf('-') >= 0){
+                    
+                    if (a.custom && a.from && a.to) {
+                        // Пользовательский диапазон годов
+                        query.push(need+'.gte='+a.from+'-01-01');
+                        query.push(need+'.lte='+a.to+'-12-31');
+                    } else if(a.title.indexOf('-') >= 0){
                         query.push(need+'.lte='+a.title.split('-')[0]+'-12-31');
                         query.push(need+'.gte='+a.title.split('-')[1]+'-01-01');
-                    }
-                    else{
+                    } else {
                         query.push((type == 'movie' ? 'primary_release_year' : 'first_air_date_year') + '=' + a.title);
                     }
                 }
@@ -1619,10 +1756,12 @@
 
             data.year.items.forEach(a=>{
                 if(a.selected && !a.any){
-                    if(a.title.indexOf('-') >= 0){
+                    if (a.custom && a.from && a.to) {
+                        // Пользовательский диапазон годов
+                        query.push('airdate='+a.from+'-'+a.to);
+                    } else if(a.title.indexOf('-') >= 0){
                         query.push('airdate='+a.title.split('-')[1]+'-'+a.title.split('-')[0]);
-                    }
-                    else{
+                    } else {
                         query.push('airdate='+a.title);
                     }
                 }
@@ -1815,43 +1954,59 @@
          * Подменю с обработкой пункта "Любой"
          * @param {Object} item - объект элемента
          */
-        function submenu(item){
-            window.Lampa.Select.show({
-                title: item.title,
-                items: item.items,
-                onBack: main,
-                onSelect: (a)=>{
-                    // Для чекбоксов с пунктом "Любой"
-                    if(item.items.some(i => i.checkbox) && a.any) {
-                        // Если выбрали "Любой", очищаем все остальные чекбоксы
-                        item.items.forEach(i => {
-                            if(i.checkbox) {
-                                i.checked = (i === a);
-                            }
-                        });
+		function submenu(item){
+            // Если это меню годов, добавляем обработчик для custom пункта
+            if (item === data.year) {
+                window.Lampa.Select.show({
+                    title: item.title,
+                    items: item.items,
+                    onBack: main,
+                    onSelect: (a)=>{
+                        if (a.custom) {
+                            // Пользовательский диапазон
+                            inputYearRange();
+                        } else {
+                            // Обычная логика выбора
+                            select(item.items, a);
+                            selected(item);
+                            main();
+                        }
                     }
-                    // Для радио-кнопок
-                    else if(!a.checkbox) {
-                        select(item.items, a);
-                    }
-                    // Для обычных чекбоксов
-                    else if(a.checkbox && !a.any) {
-                        // Инвертируем состояние чекбокса
-                        a.checked = !a.checked;
+                });
+            } else {
+                // Обычное подменю для остальных фильтров
+                window.Lampa.Select.show({
+                    title: item.title,
+                    items: item.items,
+                    onBack: main,
+                    onSelect: (a)=>{
+                        // Для чекбоксов с пунктом "Любой"
+                        if(item.items.some(i => i.checkbox) && a.any) {
+                            item.items.forEach(i => {
+                                if(i.checkbox) {
+                                    i.checked = (i === a);
+                                }
+                            });
+                        }
+                        // Для радио-кнопок
+                        else if(!a.checkbox) {
+                            select(item.items, a);
+                        }
+                        // Для обычных чекбоксов
+                        else if(a.checkbox && !a.any) {
+                            a.checked = !a.checked;
+                            item.items.forEach(i => {
+                                if(i.any && i.checkbox) {
+                                    i.checked = false;
+                                }
+                            });
+                        }
                         
-                        // Если выбрали обычный чекбокс, снимаем "Любой"
-                        item.items.forEach(i => {
-                            if(i.any && i.checkbox) {
-                                i.checked = false;
-                            }
-                        });
+                        selected(item);
+                        main();
                     }
-                    
-                    // Обновляем подзаголовок и сохраняем
-                    selected(item);
-                    main();
-                }
-            });
+                });
+            }
         }
 
         /**
@@ -1921,6 +2076,54 @@
                         he: 'םסנן +',
                         cs: 'Výběr +',
                         ro: 'Selecţie +'  
+                    },
+					year_range_title: {
+                        ru: 'Диапазон годов',
+                        en: 'Year range',
+                        uk: 'Діапазон років',
+                        be: 'Дыяпазон гадоў',
+                        zh: '年份范围',
+                        pt: 'Intervalo de anos',
+                        bg: 'Годишен диапазон',
+                        he: 'טווח שנים',
+                        cs: 'Rozsah let',
+                        ro: 'Interval de ani'
+                    },
+                    year_from: {
+                        ru: 'От (год):',
+                        en: 'From (year):',
+                        uk: 'Від (рік):',
+                        be: 'Ад (год):',
+                        zh: '从（年份）',
+                        pt: 'De (ano):',
+                        bg: 'От (година):',
+                        he: 'מ (שנה)',
+                        cs: 'Od (rok):',
+                        ro: 'De la (an):'
+                    },
+                    year_to: {
+                        ru: 'До (год):',
+                        en: 'To (year):',
+                        uk: 'До (рік):',
+                        be: 'Да (год):',
+                        zh: '到（年份）',
+                        pt: 'Até (ano):',
+                        bg: 'До (година):',
+                        he: 'עד (שנה)',
+                        cs: 'Do (rok):',
+                        ro: 'Până la (an):'
+                    },
+                    year_range_manual: {
+                        ru: '✎ Свой диапазон',
+                        en: '✎ Custom range',
+                        uk: '✎ Свій діапазон',
+                        be: '✎ Свой дыяпазон',
+                        zh: '✎ 自定义范围',
+                        pt: '✎ Intervalo personalizado',
+                        bg: '✎ Персонализиран диапазон',
+                        he: '✎ טווח מותאם אישית',
+                        cs: '✎ Vlastní rozsah',
+                        ro: '✎ Interval personalizat'
                     },
                     filter_reset_all: {
                         ru: 'Сброс фильтра',
